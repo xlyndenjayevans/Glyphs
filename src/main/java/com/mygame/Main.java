@@ -21,6 +21,8 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
+        flyCam.setEnabled(false);
+        
         Box b = new Box(1, 1, 1);
         Geometry geom = new Geometry("Box", b);
 
