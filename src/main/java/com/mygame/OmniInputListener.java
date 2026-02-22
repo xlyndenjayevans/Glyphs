@@ -19,6 +19,8 @@ import com.jme3.input.event.TouchEvent;
  */
 public class OmniInputListener implements RawInputListener {
 
+    public boolean isLeftMouseDown;
+    
     @Override
     public void beginInput() {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -42,6 +44,12 @@ public class OmniInputListener implements RawInputListener {
     @Override
     public void onMouseMotionEvent(MouseMotionEvent mme) {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+   
+        if (isLeftMouseDown){
+        
+            System.out.println(mme.getX() + " " + mme.getY());
+                    
+        }
     }
 
    @Override
@@ -51,8 +59,10 @@ public class OmniInputListener implements RawInputListener {
         
         if (evt.getButtonIndex() == MouseInput.BUTTON_LEFT) { // Left Mouse Button
             if (evt.isPressed()) {
+                isLeftMouseDown = true;
                 System.out.println("Mouse Pressed at: " + evt.getX() + ", " + evt.getY());
             } else {
+                isLeftMouseDown = false;
                 System.out.println("Mouse Released!");
             }
         }
