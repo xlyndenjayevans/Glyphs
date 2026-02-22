@@ -22,5 +22,6 @@ public class App {
         glyph.drawCircle(new Vector2f(128,128), (short)10, new Vector4f(255,0,0,255));
         GlyphMesh glyphMesh = new GlyphMesh(new Vector2f(0,0), new Vector2f(1,1), glyph);
         glyphMesh.render();
+        App.app.getInputManager().addRawInputListener(new OmniInputListener());
     }
 }
