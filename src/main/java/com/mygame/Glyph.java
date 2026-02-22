@@ -26,6 +26,7 @@ public class Glyph {
     public short height;
     public short depth;
     
+    Texture2D texture;
     
     public Glyph(short width, short height, short depth){
     
@@ -67,11 +68,12 @@ buffer.flip();
 Image image = new Image(Image.Format.RGBA8, width, height, buffer, ColorSpace.sRGB);
 
 // 3. Create the Texture2D
-Texture2D texture = new Texture2D(image);
+ 
+texture = new Texture2D(image);
 texture.setMinFilter(Texture.MinFilter.BilinearNoMipMaps);
 texture.setMagFilter(Texture.MagFilter.Bilinear);
-          
-return texture;
+           
+ return texture;
    }
    
    public void drawRectangle(Vector2f start, Vector2f end, Vector4f color){

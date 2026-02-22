@@ -65,6 +65,7 @@ geom = new Geometry("Glyph", mesh);
 
     // 3. Set parameters defined in the .j3md file
     mat.setColor("Color", ColorRGBA.White);
+    
     mat.setTexture("ColorMap", glyph.glyph());
     
     geom.setMaterial(mat);
@@ -75,6 +76,7 @@ geom = new Geometry("Glyph", mesh);
     
     public void render(){
     mat.setColor("Color", ColorRGBA.White);
+   
     mat.setTexture("ColorMap", glyph.glyph());
     
      
