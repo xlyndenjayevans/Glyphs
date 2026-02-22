@@ -22,22 +22,29 @@ public class App {
         App.app = main;
         Glyph glyph = new Glyph((short)256,(short)256,(short)4);
         glyph.drawCircle(new Vector2f(128,128), (short)10, new Vector4f(255,0,0,255));
-        GlyphMesh glyphMesh = new GlyphMesh(new Vector2f(-0.5f,-0.5f), new Vector2f(0.5f,0.5f), glyph){
+        GlyphMesh glyphMesh = new GlyphMesh(new Vector2f(0f,0f), new Vector2f(.5f,.75f), glyph){
         
             @Override
             public void onClick(Vector2f location){
-                Vector2f center = (this.start.add(this.end)).divide(2);
-                Vector2f distance = (this.end.subtract(this.start));
-                Vector2f glDistance = (new Vector2f(1,1).subtract(new Vector2f(-1,-1)));
-                Vector2f multiplyDistance = distance.mult(glDistance.x, glDistance.y);
-                
-                Vector2f unitPixel = distance.mult(this.glyph.width,this.glyph.height);
-                Vector2f adjustedLocation = start.add(location.mult(distance.x, distance.y));
-                Vector2f multiply = new Vector2f(distance.x, distance.y).mult(2);
-                Vector2f distanceFromCenter = ((location.divide(multiply.x, multiply.y))) ;//.subtract(end.subtract(distance));
-                //Vector2f size = new Vector2f(this.glyph.width,this.glyph.height);
-                this.glyph.drawCircle(( ((location.mult(multiplyDistance.x, multiplyDistance.y)).add(center.mult(multiplyDistance.x, multiplyDistance.y))).add(start.divide(multiplyDistance.x, multiplyDistance.y))).mult(unitPixel.x, unitPixel.y)  , (short)10, new Vector4f(255,255,255,255));
-                this.render();
+               // 1. Calculate the total size of the bounding box in world/UI units
+    float boxWidth = this.end.x - this.start.x;
+    float boxHeight = this.end.y - this.start.y;
+
+    // 2. Normalize the click: (Click - Start) / (End - Start)
+    // This gives us a 0.0 to 1.0 range relative to the box itself
+    float relativeX = (location.x - this.start.x) / boxWidth;
+    float relativeY = (location.y - this.start.y) / boxHeight;
+
+    // 3. Map to Glyph Pixel Space
+    // Multiply the 0-1 ratio by the actual pixel dimensions of the texture
+    float pixelX = relativeX * this.glyph.width;
+    float pixelY = relativeY * this.glyph.height;
+
+    Vector2f drawPos = new Vector2f(pixelX, pixelY);
+
+    // 4. Draw and Render
+    this.glyph.drawCircle(drawPos, (short)10, new Vector4f(255, 255, 255, 255));
+    this.render();
                 
             }
             
