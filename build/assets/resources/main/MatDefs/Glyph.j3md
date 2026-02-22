@@ -1,0 +1,19 @@
+MaterialDef Glyph {
+    MaterialParameters {
+        Texture2D ColorMap
+        Color Color
+    }
+
+    Technique Default {
+        VertexShader GLSL150:   Shaders/Glyph.vert
+        FragmentShader GLSL150: Shaders/Glyph.frag
+
+        WorldParameters {
+            WorldViewProjectionMatrix
+        }
+
+        Defines {
+            HAS_COLORMAP : ColorMap
+        }
+    }
+}

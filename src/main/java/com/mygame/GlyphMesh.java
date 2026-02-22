@@ -4,8 +4,11 @@
  */
 package com.mygame;
 
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.util.BufferUtils;
@@ -16,8 +19,13 @@ import com.jme3.util.BufferUtils;
  */
 public class GlyphMesh {
    
-    public GlyphMesh(Vector2f start, Vector2f end){
+    public Geometry geom;
+    public Glyph glyph;
+    public Material mat;
     
+    public GlyphMesh(Vector2f start, Vector2f end, Glyph glyph){
+    
+        this.glyph = glyph;
         Mesh mesh = new Mesh();
 
 // 1. Define the vertices
@@ -46,7 +54,23 @@ mesh.setBuffer(Type.Index, 3, BufferUtils.createIntBuffer(indexes));
 // 5. Calculate normals automatically for lighting
 mesh.updateBound();
 mesh.updateCounts();
+
+geom = new Geometry("Glyph", mesh);
+
+ mat = new Material(App.app.getAssetManager(), "MatDefs/Glyph.j3md");
+
+    // 3. Set parameters defined in the .j3md file
+    mat.setColor("Color", ColorRGBA.White);
+    mat.setTexture("ColorMap", glyph.glyph());
+    
+    geom.setMaterial(mat);
+    App.app.getRootNode().attachChild(geom);
 // Optional: If you don't define normals manually, use this:
 // Generator.generateNormals(mesh);
+    }
+    
+    public void render(){
+    mat.setColor("Color", ColorRGBA.White);
+    mat.setTexture("ColorMap", glyph.glyph());
     }
 }
