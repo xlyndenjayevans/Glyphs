@@ -22,10 +22,14 @@ public class GlyphMesh {
     public Geometry geom;
     public Glyph glyph;
     public Material mat;
+    public Vector2f start;
+    public Vector2f end;
     
     public GlyphMesh(Vector2f start, Vector2f end, Glyph glyph){
     
         this.glyph = glyph;
+        this.start = start;
+        this.end = end;
         Mesh mesh = new Mesh();
 
 // 1. Define the vertices
@@ -72,5 +76,12 @@ geom = new Geometry("Glyph", mesh);
     public void render(){
     mat.setColor("Color", ColorRGBA.White);
     mat.setTexture("ColorMap", glyph.glyph());
+    
+     
+    
+    }
+    
+    public void onClick(Vector2f location){
+    
     }
 }

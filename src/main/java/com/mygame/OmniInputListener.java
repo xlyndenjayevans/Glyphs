@@ -12,6 +12,7 @@ import com.jme3.input.event.KeyInputEvent;
 import com.jme3.input.event.MouseButtonEvent;
 import com.jme3.input.event.MouseMotionEvent;
 import com.jme3.input.event.TouchEvent;
+import com.jme3.math.Vector2f;
 
 /**
  *
@@ -47,7 +48,7 @@ public class OmniInputListener implements RawInputListener {
    
         if (isLeftMouseDown){
         
-            System.out.println(mme.getX() + " " + mme.getY());
+            click(new Vector2f(mme.getX(), mme.getY()));
                     
         }
     }
@@ -60,6 +61,7 @@ public class OmniInputListener implements RawInputListener {
         if (evt.getButtonIndex() == MouseInput.BUTTON_LEFT) { // Left Mouse Button
             if (evt.isPressed()) {
                 isLeftMouseDown = true;
+                click(new Vector2f(evt.getX(), evt.getY()));
                 System.out.println("Mouse Pressed at: " + evt.getX() + ", " + evt.getY());
             } else {
                 isLeftMouseDown = false;
@@ -78,4 +80,22 @@ public class OmniInputListener implements RawInputListener {
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
+    public void click(Vector2f location){
+    
+    float width = App.app.getCamera().getWidth();
+    float height = App.app.getCamera().getHeight();
+
+    // The screen pixel coordinates (e.g., from an InputEvent)
+    float screenX = location.getX(); 
+    float screenY = location.getY();
+
+    // Convert to [-1, 1] range
+    float ndcX = (screenX / width) * 2f - 1f;
+    float ndcY = (screenY / height) * 2f - 1f;
+    
+    for (GlyphMesh glyph: App.allGlyphMeshes.values()){
+    
+        glyph.onClick(new Vector2f(ndcX, ndcY));
+    }
+    }
 }

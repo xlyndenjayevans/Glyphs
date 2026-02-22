@@ -49,10 +49,10 @@ System.out.println(layer[128][128][0]);
 System.out.println(layer[128][128][1]);
 System.out.println(layer[128][128][2]);
 System.out.println(layer[128][128][3]);
-for (short x = 0; x < width; x++){
+
 
     for (short y = 0; y < height; y++){
-    
+    for (short x = 0; x < width; x++){
         for (short z = 0; z < depth; z++){
        
           
@@ -110,10 +110,10 @@ return texture;
    
    public void drawPixel(Vector2f point, Vector4f color){
    
-       this.layer[(int)point.x][(int)point.y][0] = (byte) (color.x / 2);
-       this.layer[(int)point.x][(int)point.y][1] = (byte) (color.y / 2);
-       this.layer[(int)point.x][(int)point.y][2] = (byte) (color.z / 2);
-       this.layer[(int)point.x][(int)point.y][3] = (byte) (color.w / 2);
+       this.layer[(int)point.x][(int)point.y][0] = (byte) (color.x);
+       this.layer[(int)point.x][(int)point.y][1] = (byte) (color.y);
+       this.layer[(int)point.x][(int)point.y][2] = (byte) (color.z);
+       this.layer[(int)point.x][(int)point.y][3] = (byte) (color.w);
        
    }
 }
