@@ -4,6 +4,11 @@
  */
 package com.mygame;
 
+import com.jme3.export.InputCapsule;
+import com.jme3.export.JmeExporter;
+import com.jme3.export.JmeImporter;
+import com.jme3.export.OutputCapsule;
+import com.jme3.export.Savable;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector4f;
 import com.jme3.texture.Image;
@@ -11,13 +16,14 @@ import com.jme3.texture.Texture;
 import com.jme3.texture.Texture2D;
 import com.jme3.texture.image.ColorSpace;
 import com.jme3.util.BufferUtils;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 /**
  *
  * @author xlyndenjayevans
  */
-public class Glyph {
+public class Glyph implements Savable {
     
     public byte[][][] layer;
     public byte[] saveLayer;
@@ -46,18 +52,18 @@ public class Glyph {
        // 1. Wrap the byte array in a ByteBuffer
 ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * depth);
   
-System.out.println(layer[128][128][0]);
-System.out.println(layer[128][128][1]);
-System.out.println(layer[128][128][2]);
-System.out.println(layer[128][128][3]);
+ 
 
 
+int i = 0;
     for (short y = 0; y < height; y++){
     for (short x = 0; x < width; x++){
         for (short z = 0; z < depth; z++){
        
           
             buffer.put(layer[x][y][z]);
+            this.saveLayer[i] = layer[x][y][z];
+            i++;
         }
     }
 }
@@ -118,4 +124,29 @@ texture.setMagFilter(Texture.MagFilter.Bilinear);
        this.layer[(int)point.x][(int)point.y][3] = (byte) (color.w);
        
    }
+
+    @Override
+    public void write(JmeExporter je) throws IOException {
+        OutputCapsule capsule = je.getCapsule(this);
+        capsule.write(saveLayer, "saveLayer", new byte[width * height * depth]);
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void read(JmeImporter ji) throws IOException {
+        InputCapsule capsule = ji.getCapsule(this);
+        saveLayer = capsule.readByteArray("saveLayer", new byte[width * height * depth]);
+        int i = 0;
+    for (short y = 0; y < height; y++){
+    for (short x = 0; x < width; x++){
+        for (short z = 0; z < depth; z++){
+       
+           
+            layer[x][y][z] = this.saveLayer[i];
+            i++;
+        }
+    }
+}
+        //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }

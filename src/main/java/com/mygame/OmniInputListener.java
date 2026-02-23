@@ -95,7 +95,9 @@ public class OmniInputListener implements RawInputListener {
     
     for (GlyphMesh glyph: App.allGlyphMeshes.values()){
     
+        if (ndcX >= glyph.start.x && ndcX <= glyph.end.x && ndcY >= glyph.start.y && ndcY <= glyph.end.y){
         glyph.onClick(new Vector2f(ndcX, ndcY));
+        }
     }
     }
 }
