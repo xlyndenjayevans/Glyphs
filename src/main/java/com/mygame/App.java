@@ -77,7 +77,7 @@ public class App {
               public void onClick(Vector2f location){
                   
                   // Define where to save the file
-    File file = new File(System.getProperty("user.home") + "/" + "Zero" + ".glyph");
+    File file = new File(System.getProperty("user.home") + "/" + "ForeSlash" + ".glyph");
     
     BinaryExporter exporter = BinaryExporter.getInstance();
     try {
