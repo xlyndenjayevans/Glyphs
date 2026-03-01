@@ -128,9 +128,9 @@ texture.setMagFilter(Texture.MagFilter.Bilinear);
     @Override
     public void write(JmeExporter je) throws IOException {
         OutputCapsule capsule = je.getCapsule(this);
-        capsule.write(width, "width", 1);
-        capsule.write(height, "height", 1);
-        capsule.write(depth, "depth", 1);
+        capsule.write((short)width, "width", (short)1);
+        capsule.write((short)height, "height", (short)1);
+        capsule.write((short)depth, "depth", (short)1);
         capsule.write(saveLayer, "saveLayer", new byte[1]);
         //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
